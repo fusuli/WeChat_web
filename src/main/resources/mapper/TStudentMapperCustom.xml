@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.fusu.dao.StudentDaoCustom">
+	<resultMap type="org.fusu.domain.TStudent" id="resultTypeStudent">
+		<id column="stu_id" property="stuId" />
+		<result column="stu_number" property="stuNumber" />
+		<result column="stu_name" property="stuName" />
+		<result column="stu_sex" property="stuSex" />
+		<result column="stu_phone" property="stuPhone" />
+		<result column="stu_class" property="stuClass" />
+	</resultMap>
+
+
+	<sql id="queryStudentWhere">
+		<if test="tStudent!=null">
+			<if test="tStudent.stuId!=null and tStudent.stuId!=''">
+				stu_id=#{tStudent.stuId}
+			</if>
+
+			<if test="tStudent.stuNumber!=null and tStudent.stuNumber!=''">
+				stu_number=#{tStudent.stuNumber}
+			</if>
+		</if>
+	</sql>
+	<select id="queryStudent" parameterType="org.fusu.domain.TStudentVo"
+		resultMap="resultTypeStudent">
+		select * from t_student
+		<where>
+			<include refid="queryStudentWhere"></include>
+		</where>
+	</select>
+</mapper>
